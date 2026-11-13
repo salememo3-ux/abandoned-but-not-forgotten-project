@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abandoned but Not Forgotten</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf3ff;--ink:#1a2547;--mute:#46537d;--card:#fff;--line:#c4d3f0;--acc:#3466c9;--acc-s:#dce7fb;--planet:#b9bcc6;--crater:#9ea2b0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-world=mars]{--acc:#c2511f;--acc-s:#fbe2d4;--planet:#d9703f;--crater:#b95a2e}
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]){--bg:#0e1636;--ink:#f3efe6;--mute:#b4bddb;--card:#1a2756;--line:#2f4080;--acc:#ffd166;--acc-s:#2b3a75}
+:root:not([data-theme="light"])[data-world=mars]{--acc:#ff9a6b;--acc-s:#4a2e3d}}
+:root[data-theme="dark"]{--bg:#0e1636;--ink:#f3efe6;--mute:#b4bddb;--card:#1a2756;--line:#2f4080;--acc:#ffd166;--acc-s:#2b3a75}
+:root[data-theme="dark"][data-world=mars]{--acc:#ff9a6b;--acc-s:#4a2e3d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.1rem/1.7 Fredoka,"Segoe UI",Tahoma,sans-serif;transition:background .5s}
+main{max-width:44rem;margin:0 auto;padding:1.5rem 1.1rem 7rem}
+h1{font-size:clamp(2.2rem,9vw,3.6rem);line-height:1.1;margin:.2rem 0;font-weight:600}
+h3{margin:0;font-size:1.4rem;font-weight:600}
+.sub{color:var(--mute);margin:.4rem 0 1rem}
+.hero{position:relative;overflow:hidden;border-radius:1.2rem;background:linear-gradient(#0b1230,#1c2c6b);height:210px;margin-bottom:1rem}
+.hero svg{position:absolute;inset:0;width:100%;height:100%}
+.star{animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.2}}
+.planet{fill:var(--planet);transition:fill .5s}
+.cr{fill:var(--crater);transition:fill .5s}
+.ship{animation:fly 9s linear infinite}
+@keyframes fly{from{transform:translate(-80px,30px) rotate(8deg)}50%{transform:translate(380px,10px) rotate(-6deg)}to{transform:translate(860px,40px) rotate(8deg)}}
+.bob{animation:bob 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bob{50%{transform:translateY(-3px)}}
+.rot{animation:rot .25s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes rot{50%{transform:scaleX(.15)}}
+.tabs{display:flex;gap:.6rem;margin:1rem 0}
+.tabs button{flex:1;font:inherit;font-weight:500;padding:.8rem;border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:1rem;cursor:pointer}
+.tabs button[aria-selected=true]{border-color:var(--acc);background:var(--acc-s)}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#intro{margin:0 0 1.2rem;color:var(--mute)}
+ol{list-style:none;margin:0;padding:0}
+li{margin-bottom:.8rem}
+details{background:var(--card);border:2px solid var(--line);border-radius:1rem}
+details[open]{border-color:var(--acc)}
+summary{display:flex;gap:.9rem;align-items:center;cursor:pointer;padding:.7rem .9rem;list-style:none}
+summary::-webkit-details-marker{display:none}
+.ic{flex:none;width:64px;height:64px}
+.yr{color:var(--acc);font-weight:500;font-size:.95rem}
+.tag{color:var(--mute);font-size:.95rem}
+.st{display:inline-block;margin-top:.2rem;padding:0 .7rem;border-radius:1rem;background:var(--acc-s);font-size:.85rem}
+.body{padding:0 1rem 1rem}
+.body p{margin:.6rem 0}
+.body b{color:var(--acc);font-weight:600}
+.body .say{font-size:1.15rem}
+details[open] .body{animation:pop .35s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}}
+section.q{margin-top:2.2rem;padding:1.2rem;background:var(--card);border:2px solid var(--line);border-radius:1.2rem}
+.q h2{margin:0 0 .6rem;font-size:1.6rem}
+.opts{display:grid;gap:.5rem}
+.opts button{font:inherit;text-align:start;padding:.7rem 1rem;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:.8rem;cursor:pointer}
+.opts button.ok{border-color:var(--acc);background:var(--acc-s)}
+.opts button.no{opacity:.5}
+.fb{min-height:1.6rem;color:var(--mute)}
+.next{font:inherit;padding:.5rem 1.4rem;border:0;border-radius:2rem;background:var(--acc);color:var(--bg);cursor:pointer}
+.end{margin-top:2rem;text-align:center;font-size:1.25rem}
+footer{margin-top:1.5rem;color:var(--mute);font-size:.9rem}
+.prog{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:.6rem;background:var(--card);border:2px solid var(--line);border-radius:2rem;padding:.3rem .9rem;margin:.6rem 0 1rem;font-weight:500}
+.bar{flex:1;height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.snd{font:inherit;font-size:.9rem;border:0;background:var(--acc-s);color:var(--ink);border-radius:1rem;padding:.2rem .8rem;cursor:pointer}
+.act{margin-top:.6rem}
+.map{position:relative;width:min(100%,320px);aspect-ratio:1;margin:0 auto 1.2rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--planet),var(--crater))}
+.map button{position:absolute;transform:translate(-50%,-50%);font:inherit;font-size:.78rem;background:var(--card);color:var(--ink);border:2px solid var(--acc);border-radius:1rem;padding:0 .5rem;cursor:pointer;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;max-width:300px;margin:.8rem auto}
+.hole{position:relative;aspect-ratio:1;border-radius:50%;background:var(--bg);border:2px solid var(--line)}
+.rock{position:absolute;inset:14%;border:0;border-radius:40% 55% 45% 50%;background:var(--acc);box-shadow:inset -5px -5px 0 rgba(0,0,0,.25);cursor:pointer}
+.mascot{position:fixed;inset-inline-end:.8rem;bottom:0;padding-bottom:calc(.8rem + env(safe-area-inset-bottom,0px));display:flex;align-items:flex-end;gap:.5rem;z-index:9;max-width:80vw;pointer-events:none}
+.bub{background:var(--card);border:2px solid var(--acc);border-radius:1rem;padding:.4rem .8rem;font-size:.95rem}
+dialog{background:var(--card);color:var(--ink);border:4px solid var(--acc);border-radius:1.2rem;max-width:30rem;text-align:center;font:inherit}
+dialog h2{margin:.2rem 0}
+.nm{font-size:2rem;font-weight:600;color:var(--acc);margin:.3rem 0}
+dialog input{font:inherit;padding:.4rem .8rem;border:2px solid var(--line);border-radius:.6rem;background:var(--bg);color:var(--ink)}
+@media print{main,.mascot,.np{display:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<div class="hero" aria-hidden="true">
+<svg id="sky" viewBox="0 0 700 210" preserveAspectRatio="xMidYMid slice">
+<circle class="planet" cx="560" cy="250" r="150"/>
+<circle class="cr" cx="500" cy="130" r="14"/><circle class="cr" cx="590" cy="115" r="9"/><circle class="cr" cx="640" cy="150" r="16"/>
+<g class="ship"><ellipse cx="0" cy="0" rx="26" ry="10" fill="#e8e4da"/><circle cx="0" cy="-8" r="9" fill="#7fd0ff"/><path d="M-26 2 L-40 8 M26 2 L40 8" stroke="#ffd166" stroke-width="4" stroke-linecap="round"/></g>
+</svg>
+</div>
+<h1>Abandoned but Not Forgotten</h1>
+<p class="sub">The robots and tools NASA left on the Moon and Mars, telling their own stories.</p>
+<div class="tabs" role="tablist" aria-label="Choose a world">
+<button role="tab" aria-selected="true" data-w="moon">Visit the Moon</button>
+<button role="tab" aria-selected="false" data-w="mars">Visit Mars</button>
+</div>
+<div class="prog" role="status"><span>Stars: <span id="sc">0</span>/10</span><span class="bar"><i id="bar"></i></span><button class="snd" id="sb">Sound: on</button></div>
+<button class="next" id="cb" hidden>Get my certificate</button>
+<p id="intro"></p>
+<div class="map" id="map"></div>
+<ol id="list"></ol>
+<section class="q">
+<h2>Game: Sample Hunt</h2>
+<p>Tap the shiny rocks before they hide. You have 20 seconds!</p>
+<div class="grid" id="gr"></div>
+<p class="fb" id="gs"></p>
+<button class="next" id="gb">Start game</button>
+</section>
+
+<section class="q" aria-live="polite">
+<h2>Quiz time!</h2>
+<p id="qt"></p>
+<div class="opts" id="qo"></div>
+<p class="fb" id="qf"></p>
+<button class="next" id="qn" hidden>Next question</button>
+</section>
+<p class="end">They may be quiet now, but what they taught us will never be forgotten.</p>
+<footer>Based on NASA's public mission information. A learning prototype for NASA Space Apps Challenge Cairo.</footer>
+</main>
+<div class="mascot" aria-live="polite"><div class="bub" id="bub">Hi! I am Astro. Tap a spot on the map!</div>
+<svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><g class="bob"><line x1="32" y1="5" x2="32" y2="14" stroke="var(--ink)" stroke-width="3"/><circle cx="32" cy="5" r="4" fill="var(--acc)"/><rect x="10" y="14" width="44" height="38" rx="12" fill="var(--acc)"/><circle cx="23" cy="30" r="6" fill="#fff"/><circle cx="41" cy="30" r="6" fill="#fff"/><circle cx="24" cy="31" r="3" fill="#14213a"/><circle cx="42" cy="31" r="3" fill="#14213a"/><rect x="24" y="42" width="16" height="4" rx="2" fill="#14213a"/></g></svg></div>
+<dialog id="cert"><h2>Space Explorer Certificate</h2><p>Awarded to</p><p class="nm" id="cn">Explorer</p><p>for meeting all 10 machines that were abandoned but never forgotten.</p>
+<p class="np"><input id="nm" placeholder="Type your name" maxlength="30"> <button class="next" id="cp">Print</button> <button class="snd" id="cx">Close</button></p></dialog>
+<script>
+const IC={
+lander:'<rect x="18" y="16" width="28" height="22" rx="7" fill="var(--acc)"/><path d="M20 38 L9 54 M44 38 L55 54 M32 38 V54" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="27" r="5" fill="var(--bg)"/>',
+mirror:'<rect x="14" y="14" width="36" height="36" rx="5" fill="var(--acc)"/><path d="M14 32h36M32 14v36" stroke="var(--bg)" stroke-width="2"/>',
+wave:'<path d="M3 32 L16 32 L22 10 L30 54 L38 18 L44 32 L61 32" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>',
+rover:'<g class="bob"><rect x="10" y="22" width="44" height="14" rx="6" fill="var(--acc)"/><path d="M40 22 L48 8" stroke="var(--ink)" stroke-width="3"/></g><circle cx="19" cy="45" r="7" fill="var(--ink)"/><circle cx="45" cy="45" r="7" fill="var(--ink)"/>',
+camera:'<rect x="8" y="20" width="48" height="32" rx="7" fill="var(--acc)"/><circle cx="32" cy="36" r="11" fill="var(--bg)"/><circle cx="32" cy="36" r="5" fill="var(--ink)"/>',
+copter:'<rect class="rot" x="2" y="10" width="60" height="5" rx="2" fill="var(--ink)"/><rect x="21" y="17" width="22" height="17" rx="6" fill="var(--acc)"/><path d="M26 34 L21 52 M38 34 L43 52" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>'};
+const W={
+moon:{intro:"Long ago, astronauts and robots visited the Moon. When they left, some of their tools stayed behind. Tap a card to hear each machine's story.",
+items:[
+{i:"lander",y:"1967",n:"Surveyor 3",t:"The little robot that got a visit",s:"Quiet",
+say:"Hi! I'm Surveyor 3. I landed on the Moon with no astronauts, just a camera and a scoop to dig the dust.",
+d:"I proved the Moon's ground was strong enough to land on. Two and a half years later, Apollo 12 astronauts landed close to me and took my camera home to study how space changes metal.",
+fun:"It was the first time humans met a robot that had travelled to another world before them."},
+{i:"mirror",y:"1969",n:"The Laser Mirror",t:"Still working today",s:"Still in use",
+say:"I'm a patch of tiny mirrors. Scientists on Earth shine a laser at me, and I bounce it straight back. I don't even need electricity!",
+d:"By timing how long the light takes to come back, scientists measure the distance to the Moon very accurately. That's how we learned the Moon moves away from us about 3.8 cm every year.",
+fun:"Apollo 11, 14 and 15 left mirrors like me. We're the machines that never really retired."},
+{i:"wave",y:"1969 to 1977",n:"ALSEP Science Station",t:"A moon-shake listener",s:"Switched off 1977",
+say:"I'm a whole science station! Astronauts set me up with seismometers that feel shakes, and a tiny nuclear power pack to keep me going.",
+d:"I recorded thousands of moonquakes. They showed that the Moon has a crust, a mantle, and a small core, just like a tiny Earth.",
+fun:"On September 30, 1977, NASA sent me the last command to turn off. Goodnight!"},
+{i:"rover",y:"1971 to 1972",n:"Moon Buggy (LRV)",t:"A battery-powered car on the Moon",s:"Parked forever",
+say:"Beep beep! I'm the Lunar Roving Vehicle. I folded up flat to fit in the lander, then Apollo 15, 16 and 17 astronauts drove me around.",
+d:"With me, Apollo 17 astronauts travelled far from their lander and found orange soil. It turned out to be tiny glass beads from volcanoes about 3.6 billion years old.",
+fun:"My top speed was around 13 km per hour, and I have no keys. I'm still parked on the Moon."},
+{i:"camera",y:"1972",n:"Far Ultraviolet Camera",t:"The first telescope on the Moon",s:"Quiet",
+say:"I'm a special camera built by scientist George Carruthers. Astronaut John Young set me up in the shadow of the lander, pointing at the sky.",
+d:"From the Moon I could see ultraviolet light that Earth's air blocks. I photographed the glowing hydrogen cloud around our planet and faraway stars.",
+fun:"My film came home with the astronauts, but I stayed on the Moon."}]},
+mars:{intro:"Mars is far away, so robots go first. When their batteries run out they stay where they are. Many worked far longer than planned!",
+items:[
+{i:"lander",y:"1976",n:"Viking 1",t:"The first long-lasting Mars lander",s:"Quiet since 1982",
+say:"I'm Viking 1. I landed on a plain called Chryse Planitia and took the first color photos from the surface of Mars.",
+d:"I tested the soil for signs of life. We didn't find clear proof, but I gave scientists their first close look at Mars' weather and ground.",
+fun:"I kept working for about six years, until November 1982."},
+{i:"rover",y:"1997",n:"Sojourner",t:"The first Mars rover",s:"Quiet",
+say:"I'm Sojourner, as small as a microwave oven. I rolled down a ramp from the Pathfinder lander and sniffed rocks with a special instrument.",
+d:"I showed that a rover can drive on Mars on its own, and that it doesn't have to be huge to do real science.",
+fun:"I was planned to work for 7 days. I worked for 83 Martian days!"},
+{i:"rover",y:"2004 to 2018",n:"Opportunity",t:"The robot that kept going and going",s:"Quiet since 2018",
+say:"I'm Opportunity. My team hoped I'd last three months. Instead, I explored Mars for almost 14 years!",
+d:"I found tiny round rocks rich in a mineral called hematite. They are clues that liquid water once soaked this ground. I drove more than 45 km.",
+fun:"A huge dust storm hid the Sun in 2018 and I fell asleep for good. NASA ended my mission in February 2019."},
+{i:"wave",y:"2018 to 2022",n:"InSight",t:"Mars' doctor",s:"Quiet since 2022",
+say:"I'm InSight. I stay in one place and put a super-sensitive seismometer on the ground to listen to Mars' heartbeat.",
+d:"I felt more than 1,300 marsquakes. Their waves showed that Mars has a liquid core about 1,830 km wide.",
+fun:"Dust slowly covered my solar panels until I ran out of power in December 2022."},
+{i:"copter",y:"2021 to 2024",n:"Ingenuity",t:"The first helicopter on another world",s:"Resting since 2024",
+say:"I'm Ingenuity, a tiny helicopter. Mars' air is very thin, so my blades spin super fast to lift me up.",
+d:"I proved that controlled flight is possible on another planet. Now NASA thinks about flying machines that can explore Mars from the sky.",
+fun:"I was meant to fly 5 times. I flew 72! I now rest in Jezero Crater."}]}};
+const IQ={
+"Surveyor 3":["If you landed on the Moon, how would you test if the ground is safe?","Scoop some dust and press on it, just like Surveyor 3 did."],
+"The Laser Mirror":["Why can a mirror last longer than a machine with batteries?","It has no parts that run out or break, so it can wait quietly."],
+"ALSEP Science Station":["What would you listen for if you were a moon-shake listener?","Tiny shakes from deep inside, like footsteps from the Moon's insides."],
+"Moon Buggy (LRV)":["Where would you drive the Moon Buggy first?","Maybe to a crater's edge, where fresh rocks tell old stories."],
+"Far Ultraviolet Camera":["What would you point a telescope at from the Moon?","Earth's glow, bright stars, or faraway galaxies."],
+"Viking 1":["What questions would you ask the Martian soil?","Is there water? Is anything alive? What is it made of?"],
+"Sojourner":["How can a small rover help a big lander?","It can roll to rocks that are too far for the lander to reach."],
+"Opportunity":["How would you keep a rover going for many years?","Keep its solar panels clean and let it rest in winter and dust storms."],
+"InSight":["Why listen to the ground instead of taking photos?","Shakes travel through the inside of a planet and show what we cannot see."],
+"Ingenuity":["What could a Mars helicopter scout for explorers?","Safe roads, cool rocks and cliffs, all from above."]};
+const MP={moon:[[28,50,"Surveyor 3"],[62,40,"Laser Mirror"],[50,18,"ALSEP"],[72,66,"Moon Buggy"],[36,78,"UV Camera"]],mars:[[36,24,"Viking 1"],[20,46,"Sojourner"],[50,56,"Opportunity"],[78,40,"InSight"],[64,78,"Ingenuity"]]};
+let snd=true,AC;const stars=new Set();
+const $=id=>document.getElementById(id);
+function beep(f,d){if(!snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+(d||.12))}catch(e){}}
+function say(t){$("bub").textContent=t}
+function speak(t){if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.95;speechSynthesis.speak(u)}
+function star(id){if(stars.has(id))return;stars.add(id);$("sc").textContent=stars.size;$("bar").style.width=stars.size*10+"%";beep(880);$("cb").hidden=stars.size<10;say(stars.size<10?"New star! "+stars.size+" of 10.":"All 10 stars! You earned a certificate!")}
+$("sb").onclick=()=>{snd=!snd;$("sb").textContent="Sound: "+(snd?"on":"off")};
+$("cb").onclick=()=>$("cert").showModal();
+$("nm").oninput=()=>$("cn").textContent=$("nm").value||"Explorer";
+$("cp").onclick=()=>print();$("cx").onclick=()=>$("cert").close();
+function post(){
+const m=$("map");m.setAttribute("aria-label","Stylized map, not to scale");
+m.innerHTML=MP[world].map((p,k)=>`<button style="left:${p[0]}%;top:${p[1]}%" data-k="${k}">${p[2]}</button>`).join("");
+m.querySelectorAll("button").forEach(b=>b.onclick=()=>{const d=document.querySelector("#c"+b.dataset.k+" details");d.open=true;d.scrollIntoView({block:"center"})});
+list.querySelectorAll("details").forEach(d=>d.addEventListener("toggle",()=>{if(d.open)star(d.dataset.n)}));
+list.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{const x=W[world].items[b.dataset.l];speak(x.say+" "+x.d+" "+x.fun)});
+list.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{b.nextElementSibling.hidden=false;beep(520)});
+say(world==="moon"?"Welcome to the Moon! Tap a spot on the map.":"Welcome to Mars! Tap a spot on the map.")}
+const gr=$("gr"),gs=$("gs"),gb=$("gb");let gsc=0,gt,go,left=0;
+gr.innerHTML=Array.from({length:9},()=>'<div class="hole"><button class="rock" hidden aria-label="Collect rock"></button></div>').join("");
+const rocks=[...gr.querySelectorAll(".rock")];
+const gtxt=()=>gs.textContent="Rocks: "+gsc+", time: "+left+"s";
+rocks.forEach(r=>r.onclick=()=>{r.hidden=true;gsc++;beep(600+gsc*25,.08);gtxt()});
+gb.onclick=()=>{clearInterval(gt);clearInterval(go);gsc=0;left=20;gb.disabled=true;gtxt();say("Quick, collect the rocks!");
+gt=setInterval(()=>{left--;gtxt();if(left<=0){clearInterval(gt);clearInterval(go);rocks.forEach(r=>r.hidden=true);gb.disabled=false;gb.textContent="Play again";gs.textContent="You collected "+gsc+" rocks!";say(gsc>=12?"Wow, a space champion!":"Nice job! Play again to beat your score.");beep(990,.3)}},1000);
+go=setInterval(()=>{rocks.forEach(r=>r.hidden=true);rocks[Math.floor(Math.random()*9)].hidden=false},800)};
+let world="moon";
+const root=document.documentElement,list=document.getElementById("list");
+function render(){
+root.dataset.world=world;
+document.getElementById("intro").textContent=W[world].intro;
+list.innerHTML=W[world].items.map((x,k)=>{const r=IQ[x.n];return `<li id="c${k}"><details data-n="${x.n}"><summary><svg class="ic" viewBox="0 0 64 64" aria-hidden="true">${IC[x.i]}</svg><span><span class="yr">${x.y}</span><h3>${x.n}</h3><span class="tag">${x.t}</span><br><span class="st">${x.s}</span></span></summary><div class="body"><p class="say">${x.say}</p><p><b>What I found:</b> ${x.d}</p><p><b>Fun fact:</b> ${x.fun}</p><div class="act"><button class="snd" data-l="${k}">Listen to my story</button></div><p><b>Think:</b> ${r[0]}</p><button class="snd" data-r>Show an idea</button><p hidden>${r[1]}</p></div></details></li>`}).join("");
+document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.w===world));post();
+}
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{world=b.dataset.w;render()});
+const sky=document.getElementById("sky");let s="";
+for(let k=0;k<45;k++)s+=`<circle class="star" cx="${(k*97)%700}" cy="${(k*53)%160}" r="${1+k%3*.6}" fill="#fff" style="animation-delay:${(k%7)*.4}s"/>`;
+sky.insertAdjacentHTML("afterbegin",s);
+render();
+const Q=[
+{q:"How do scientists know the Moon is moving away from us?",o:["They shine lasers at mirrors left by astronauts","They measure the Moon's shadow","They ask the astronauts"],a:0,e:"The laser bounces back, and the travel time shows the distance."},
+{q:"What did InSight discover about Mars?",o:["It has a huge ocean today","It has a liquid core","It has thick air like Earth"],a:1,e:"Marsquake waves revealed the core."},
+{q:"How many flights was Ingenuity planned to make?",o:["72","20","5"],a:2,e:"Only 5 test flights were planned. It flew 72!"}];
+let qi=0;
+const qt=document.getElementById("qt"),qo=document.getElementById("qo"),qf=document.getElementById("qf"),qn=document.getElementById("qn");
+function ask(){
+const c=Q[qi];qt.textContent=c.q;qf.textContent="";qn.hidden=true;qo.innerHTML="";
+c.o.forEach((t,k)=>{const b=document.createElement("button");b.textContent=t;b.onclick=()=>{
+[...qo.children].forEach((x,j)=>{x.disabled=true;x.className=j===c.a?"ok":"no"});
+qf.textContent=(k===c.a?"Yes! ":"Not quite. ")+c.e;if(k===c.a){beep(880);say("Great answer!")}else say("Good try!");
+qn.hidden=false;qn.textContent=qi<Q.length-1?"Next question":"Play again"};qo.appendChild(b)});
+}
+qn.onclick=()=>{qi=(qi+1)%Q.length;ask()};
+ask();
+</script>
+</body>
+</html>
